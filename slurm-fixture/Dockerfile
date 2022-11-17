@@ -1,4 +1,5 @@
-FROM phusion/baseimage:0.9.22
+# syntax=docker/dockerfile:1
+FROM phusion/baseimage:jammy-1.0.1
 
 # become root user
 USER root

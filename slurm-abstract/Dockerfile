@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 # following steps from https://slurm.schedmd.com/quickstart_admin.html
 FROM xenonmiddleware/slurm-ssh
 

@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM xenonmiddleware/slurm-fixture
 
 # become root user

@@ -48,3 +48,6 @@ jobs:
         with:
           push: true
           pull: true
+          set: |
+            slurm-packaged.tags=${{ steps.meta.outputs.tags }}
+            slurm-packaged.labels=${{ steps.meta.outputs.labels }}

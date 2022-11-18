@@ -1,10 +1,6 @@
 # docker-bake.hcl
 # see https://github.com/docker/buildx/blob/master/docs/manuals/bake/file-definition.md
 
-variable "TAG" {
-  default = "latest"
-}
-
 group "default" {
   targets = ["slurm-packaged"]
 }
@@ -14,7 +10,7 @@ target "slurm-packaged" {
   contexts = {
     "xenonmiddleware/slurm-abstract" = "target:slurm-abstract"
   }
-  tags = ["ungerware/slurm:latest"]
+  tags = ["ghcr.io/ungerware/slurm:dev"]
 }
 
 target "slurm-abstract" {

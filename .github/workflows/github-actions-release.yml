@@ -5,9 +5,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ungerware/slurp
-  GIT_CURL_VERBOSE: 1
-  GIT_TRACE: 1
+  IMAGE_NAME: Ungerware/slurp
 
 jobs:
   build-and-push-image:
@@ -37,13 +35,18 @@ jobs:
         uses: docker/metadata-action@v4.1.1
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+          flavor: |
+            latest=true
 
-      - name: Every time
-        run: >
-          echo github.ref: ${{ github.ref }}
 
       - name: Build and push Docker image
         uses: docker/bake-action@v2.3.0
         with:
           push: true
           pull: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

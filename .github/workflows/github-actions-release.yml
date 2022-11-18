@@ -42,12 +42,12 @@ jobs:
           flavor: |
             latest=true
 
-
       - name: Build and push Docker image
         uses: docker/bake-action@v2.3.0
         with:
+          files: |
+            ${{ steps.meta.outputs.bake-file }}
+            ./docker-bake.hcl
+          targets: slurm-packaged
           push: true
           pull: true
-          set: |
-            slurm-packaged.tags=${{ steps.meta.outputs.tags }}
-            slurm-packaged.labels=${{ steps.meta.outputs.labels }}

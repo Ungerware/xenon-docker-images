@@ -5,7 +5,11 @@ group "default" {
   targets = ["slurm-packaged"]
 }
 
+# see https://github.com/docker/metadata-action#bake-definition
+target "docker-metadata-action" {}
+
 target "slurm-packaged" {
+  inherits = ["docker-metadata-action"]
   context = "slurm-packaged"
   contexts = {
     "xenonmiddleware/slurm-abstract" = "target:slurm-abstract"

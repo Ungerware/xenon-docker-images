@@ -14,7 +14,6 @@ target "slurm-packaged" {
   contexts = {
     "xenonmiddleware/slurm-abstract" = "target:slurm-abstract"
   }
-  tags = ["ghcr.io/ungerware/slurm:dev"]
 }
 
 target "slurm-abstract" {

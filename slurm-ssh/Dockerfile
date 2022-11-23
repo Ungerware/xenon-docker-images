@@ -4,6 +4,9 @@ FROM xenonmiddleware/slurm-fixture
 # become root user
 USER root
 
+# phusion/baseimage disables SSH by default... enable it
+RUN rm -f /etc/service/sshd/down
+
 # install SSH client
 RUN apt-get update && apt-get install -y openssh-server
 

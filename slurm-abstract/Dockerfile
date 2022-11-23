@@ -36,6 +36,8 @@ RUN echo slurm:slurm | chpasswd
 # make directory structure required by Slurm nodes
 RUN mkdir -p /var/spool/slurmctld/state
 RUN chown -R slurm:slurm /var/spool/slurmctld
+RUN mkdir -p /var/spool/slurmd/state
+RUN chown -R slurm:slurm /var/spool/slurmd
 
 # make slurm sysconfig directory
 RUN mkdir -p /usr/local/etc/slurm
@@ -56,14 +58,19 @@ RUN chmod 600 /usr/local/etc/slurm/slurm.key
 # change ownership to the slurm user
 RUN chown slurm:slurm /usr/local/etc/slurm/slurm.key
 
-# set workdirectory to something sane
-WORKDIR /home/xenon/
-
 # add a test job script
 ADD test-slurm.job /home/xenon/test-slurm.job
 RUN chown xenon:xenon /home/xenon/test-slurm.job
 
-ADD start-services.sh /etc/start-services.sh
-RUN chmod +x /etc/start-services.sh
-CMD /etc/start-services.sh
+RUN mkdir -p /etc/my_init.d/ &&\
+    mkdir /etc/service/munged && \
+    mkdir /etc/service/slurmctld && \
+    mkdir /etc/service//slurmd
+COPY munged.sh /etc/service/munged/run
+COPY slurmctld.sh /etc/service/slurmctld/run
+COPY slurmd.sh /etc/service/slurmd/run
 
+# set workdirectory to something sane
+WORKDIR /home/xenon/
+
+CMD ["/sbin/my_init"]
